@@ -1,26 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { getCurrentUser } from '../userApi';
-import type { User } from '../../types';
+import { getCurrentUser } from '../../api';
+import { userQueryKeys } from '../../constants';
 
 export const useCurrentUser = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let isActive = true;
-
-    void getCurrentUser().then((data) => {
-      if (isActive) {
-        setUser(data);
-        setIsLoading(false);
-      }
-    });
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
-
-  return { user, isLoading };
+  return useQuery({
+    queryKey: userQueryKeys.current,
+    queryFn: getCurrentUser,
+  });
 };

@@ -1,18 +1,17 @@
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiWordRepository } from '../apiWordRepository';
-import type { QuickSaveWordPayload } from '../../types';
+import { createWord } from '../../api';
+import { wordQueryKeys } from '../../constants';
 
 export const useCreateWord = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const queryClient = useQueryClient();
 
-  const createWord = async (payload: QuickSaveWordPayload) => {
-    setIsSubmitting(true);
-    const word = await apiWordRepository.createWord(payload);
-    setIsSubmitting(false);
-
-    return word;
-  };
-
-  return { createWord, isSubmitting };
+  return useMutation({
+    mutationFn: createWord,
+    onSuccess: (_word, variables) => {
+      return queryClient.invalidateQueries({
+        queryKey: wordQueryKeys.list(variables.projectId),
+      });
+    },
+  });
 };

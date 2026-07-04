@@ -12,20 +12,18 @@ import {
 import { useCreateProject } from '@/entities/project';
 import { useCurrentUser } from '@/entities/user';
 
-type CreateProjectFormProps = {
-  onCreated?: () => void;
-};
-
-export const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
-  const { user } = useCurrentUser();
-  const { createProject, isSubmitting } = useCreateProject(user?.id ?? '');
+export const CreateProjectForm = () => {
+  const { data: user } = useCurrentUser();
+  const { mutateAsync: createProject, isPending } = useCreateProject(
+    user?.id ?? '',
+  );
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!title.trim()) {
+    if (!title.trim() || !user) {
       return;
     }
 
@@ -36,7 +34,6 @@ export const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
 
     setTitle('');
     setDescription('');
-    onCreated?.();
   };
 
   return (
@@ -66,8 +63,8 @@ export const CreateProjectForm = ({ onCreated }: CreateProjectFormProps) => {
               placeholder="Words for my trip"
             />
           </div>
-          <Button type="submit" disabled={isSubmitting || !user}>
-            {isSubmitting ? 'Creating…' : 'Create project'}
+          <Button type="submit" disabled={isPending || !user}>
+            {isPending ? 'Creating…' : 'Create project'}
           </Button>
         </form>
       </CardContent>

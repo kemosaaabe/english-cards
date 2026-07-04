@@ -20,8 +20,8 @@ import { QuickSaveWordForm } from '@/features/word';
 import { Header } from '@/widgets/header';
 
 export const HomePage = () => {
-  const { user, isLoading: isUserLoading } = useCurrentUser();
-  const { projects, isLoading, reload } = useGetProjects(user?.id ?? '');
+  const { data: user, isLoading: isUserLoading } = useCurrentUser();
+  const { data: projects = [], isLoading } = useGetProjects(user?.id ?? '');
   const defaultProjectId = projects[0]?.id;
   const setSelectedProjectId = useProjectSelectionStore(
     (state) => state.setSelectedProjectId,
@@ -47,8 +47,8 @@ export const HomePage = () => {
       <Header />
       <main className="mx-auto grid max-w-5xl gap-8 px-4 py-8 lg:grid-cols-2">
         <div className="grid gap-8">
-          <QuickSaveWordForm projects={projects} onSaved={reload} />
-          <CreateProjectForm onCreated={reload} />
+          <QuickSaveWordForm projects={projects} />
+          <CreateProjectForm />
         </div>
         <Card>
           <CardHeader>

@@ -12,12 +12,10 @@ import { ProjectWordsList } from '@/widgets/project';
 
 export const ProjectPage = () => {
   const { projectId = '' } = useParams();
-  const { project, isLoading: isProjectLoading } = useGetProjectById(projectId);
-  const {
-    words,
-    isLoading: isWordsLoading,
-    reload,
-  } = useGetWordsByProjectId(projectId);
+  const { data: project, isLoading: isProjectLoading } =
+    useGetProjectById(projectId);
+  const { data: words = [], isLoading: isWordsLoading } =
+    useGetWordsByProjectId(projectId);
 
   if (isProjectLoading) {
     return (
@@ -58,7 +56,6 @@ export const ProjectPage = () => {
           <QuickSaveWordForm
             projects={[project]}
             defaultProjectId={project.id}
-            onSaved={reload}
           />
           <ProjectWordsList words={words} isLoading={isWordsLoading} />
         </div>

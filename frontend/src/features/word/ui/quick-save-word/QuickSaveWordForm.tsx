@@ -20,15 +20,13 @@ import {
 type QuickSaveWordFormProps = {
   projects: Project[];
   defaultProjectId?: string;
-  onSaved?: () => void;
 };
 
 export const QuickSaveWordForm = ({
   projects,
   defaultProjectId,
-  onSaved,
 }: QuickSaveWordFormProps) => {
-  const { createWord, isSubmitting } = useCreateWord();
+  const { mutateAsync: createWord, isPending } = useCreateWord();
   const { selectedProjectId } = useSelectedProject();
   const [english, setEnglish] = useState('');
   const [russian, setRussian] = useState('');
@@ -50,7 +48,6 @@ export const QuickSaveWordForm = ({
 
     setEnglish('');
     setRussian('');
-    onSaved?.();
   };
 
   if (projects.length === 0) {
@@ -97,8 +94,8 @@ export const QuickSaveWordForm = ({
               required
             />
           </div>
-          <Button type="submit" disabled={isSubmitting || !projectId}>
-            {isSubmitting ? 'Saving…' : 'Save word'}
+          <Button type="submit" disabled={isPending || !projectId}>
+            {isPending ? 'Saving…' : 'Save word'}
           </Button>
         </form>
       </CardContent>

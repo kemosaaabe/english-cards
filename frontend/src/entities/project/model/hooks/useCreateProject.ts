@@ -1,18 +1,19 @@
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiProjectRepository } from '../apiProjectRepository';
+import { createProject } from '../../api';
+import { projectQueryKeys } from '../../constants';
 import type { CreateProjectPayload } from '../../types';
 
 export const useCreateProject = (userId: string) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const queryClient = useQueryClient();
 
-  const createProject = async (payload: CreateProjectPayload) => {
-    setIsSubmitting(true);
-    const project = await apiProjectRepository.createProject(userId, payload);
-    setIsSubmitting(false);
-
-    return project;
-  };
-
-  return { createProject, isSubmitting };
+  return useMutation({
+    mutationFn: (payload: CreateProjectPayload) =>
+      createProject(userId, payload),
+    onSuccess: () => {
+      return queryClient.invalidateQueries({
+        queryKey: projectQueryKeys.list(userId),
+      });
+    },
+  });
 };

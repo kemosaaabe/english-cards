@@ -17,8 +17,8 @@ import { CreateProjectForm } from '@/features/project/create-project';
 import { Header } from '@/widgets/header';
 
 export const ProjectsPage = () => {
-  const { user, isLoading: isUserLoading } = useCurrentUser();
-  const { projects, isLoading, reload } = useGetProjects(user?.id ?? '');
+  const { data: user, isLoading: isUserLoading } = useCurrentUser();
+  const { data: projects = [], isLoading } = useGetProjects(user?.id ?? '');
 
   if (isUserLoading || !user) {
     return (
@@ -64,7 +64,7 @@ export const ProjectsPage = () => {
             )}
           </CardContent>
         </Card>
-        <CreateProjectForm onCreated={reload} />
+        <CreateProjectForm />
       </main>
     </div>
   );
