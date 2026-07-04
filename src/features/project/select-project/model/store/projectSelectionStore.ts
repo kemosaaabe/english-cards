@@ -5,7 +5,9 @@ type ProjectSelectionState = {
   setSelectedProjectId: (projectId: string) => void;
 };
 
-export const useProjectSelectionStore = create<ProjectSelectionState>((set) => ({
-  selectedProjectId: null,
-  setSelectedProjectId: (selectedProjectId) => set({ selectedProjectId }),
-}));
+export const useProjectSelectionStore = create<ProjectSelectionState>(
+  (set) => ({
+    selectedProjectId: null,
+    setSelectedProjectId: (selectedProjectId) => set({ selectedProjectId }),
+  }),
+);

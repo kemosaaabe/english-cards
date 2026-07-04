@@ -34,7 +34,9 @@ export const ProjectWordsList = ({
       </CardHeader>
       <CardContent>
         {words.length === 0 ? (
-          <p className="text-muted-foreground text-sm">No words yet. Use quick save to add one.</p>
+          <p className="text-muted-foreground text-sm">
+            No words yet. Use quick save to add one.
+          </p>
         ) : (
           <Table>
             <TableHeader>

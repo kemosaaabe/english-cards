@@ -58,7 +58,9 @@ export const QuickSaveWordForm = ({
       <Card>
         <CardHeader>
           <CardTitle>Quick save</CardTitle>
-          <CardDescription>Create a project first to save words</CardDescription>
+          <CardDescription>
+            Create a project first to save words
+          </CardDescription>
         </CardHeader>
       </Card>
     );
@@ -68,7 +70,9 @@ export const QuickSaveWordForm = ({
     <Card>
       <CardHeader>
         <CardTitle>Quick save</CardTitle>
-        <CardDescription>Add an English word with Russian translation</CardDescription>
+        <CardDescription>
+          Add an English word with Russian translation
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-4" onSubmit={handleSubmit}>

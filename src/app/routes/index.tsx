@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { HomePage } from "@/pages/home";
-import { ProjectPage } from "@/pages/project";
-import { ProjectsPage } from "@/pages/projects";
-import { routes } from "@/shared/config/routes";
+import { HomePage } from '@/pages/home';
+import { ProjectPage } from '@/pages/project';
+import { ProjectsPage } from '@/pages/projects';
+import { routes } from '@/shared/config/routes';
 
 export const AppRouter = () => {
   return (

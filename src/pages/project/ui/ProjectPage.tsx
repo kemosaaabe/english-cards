@@ -13,8 +13,11 @@ import { ProjectWordsList } from '@/widgets/project';
 export const ProjectPage = () => {
   const { projectId = '' } = useParams();
   const { project, isLoading: isProjectLoading } = useGetProjectById(projectId);
-  const { words, isLoading: isWordsLoading, reload } =
-    useGetWordsByProjectId(projectId);
+  const {
+    words,
+    isLoading: isWordsLoading,
+    reload,
+  } = useGetWordsByProjectId(projectId);
 
   if (isProjectLoading) {
     return (
@@ -44,7 +47,9 @@ export const ProjectPage = () => {
       <Header />
       <main className="mx-auto grid max-w-5xl gap-8 px-4 py-8">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{project.title}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {project.title}
+          </h1>
           {project.description ? (
             <p className="text-muted-foreground mt-2">{project.description}</p>
           ) : null}

@@ -38,8 +38,8 @@ npm run preview # preview production build
 
 ## Routes
 
-| Path | Page |
-|------|------|
-| `/` | Home — quick save + recent projects |
-| `/projects` | All projects |
-| `/projects/:projectId` | Words in a project |
+| Path                   | Page                                |
+| ---------------------- | ----------------------------------- |
+| `/`                    | Home — quick save + recent projects |
+| `/projects`            | All projects                        |
+| `/projects/:projectId` | Words in a project                  |

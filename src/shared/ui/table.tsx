@@ -4,7 +4,10 @@ import { cn } from '@/shared/lib/utils';
 
 export const Table = ({ className, ...props }: ComponentProps<'table'>) => {
   return (
-    <div data-slot="table-container" className="relative w-full overflow-x-auto">
+    <div
+      data-slot="table-container"
+      className="relative w-full overflow-x-auto"
+    >
       <table
         data-slot="table"
         className={cn('w-full caption-bottom text-sm', className)}
@@ -14,7 +17,10 @@ export const Table = ({ className, ...props }: ComponentProps<'table'>) => {
   );
 };
 
-export const TableHeader = ({ className, ...props }: ComponentProps<'thead'>) => {
+export const TableHeader = ({
+  className,
+  ...props
+}: ComponentProps<'thead'>) => {
   return (
     <thead
       data-slot="table-header"
