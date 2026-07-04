@@ -1,0 +1,6 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "tailwindCSS.experimental.configFile": "src/app/styles/globals.css",
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore"
+}

@@ -1,45 +1,63 @@
 # English Cards
 
-Client-side app for saving English words with Russian translations, built with React 19, TypeScript, Vite, and shadcn/ui.
+Monorepo for learning English words with Russian translations.
 
-## Architecture (Feature-Sliced Design)
+## Structure
 
 ```
-src/
-├── app/          — app shell: providers, router, global styles
-├── pages/        — route-level composition (home, projects, project)
-├── widgets/      — composite UI blocks (header, project words list)
-├── features/     — user actions (word/quick-save, create/select project)
-├── entities/     — business entities (user, project, word)
-└── shared/       — reusable infra (ui, config, lib, api)
+english-cards/
+├── frontend/   — React + Vite + FSD
+├── backend/    — Node.js + Express + PostgreSQL
+└── docker-compose.yml
 ```
 
-### Layer rules
+## Local development
 
-- A slice imports only from **lower** layers (`app → pages → widgets → features → entities → shared`).
-- Public API of each slice is exported through `index.ts` (re-exports only).
-- Types live in `entities/<entity>/types/index.ts`.
-- Constants live in `entities/<entity>/constants/index.ts`.
-- Hooks live in `entities/<entity>/model/hooks/` (one hook per file).
-
-### Data layer (MVP)
-
-- No backend — data is stored in `localStorage` via repositories in `entities/project` and `entities/word`.
-- Mock user is defined in `entities/user` (single local user).
-- Project selection state is managed via **zustand** in `features/project/select-project/model/store`.
-
-## Scripts
+### With Docker (recommended)
 
 ```bash
-npm run dev     # start dev server
-npm run build   # typecheck + production build
-npm run preview # preview production build
+docker compose up --build
 ```
 
-## Routes
+- Frontend: http://localhost:8080
+- Backend API: http://localhost:3001/api/health
 
-| Path                   | Page                                |
-| ---------------------- | ----------------------------------- |
-| `/`                    | Home — quick save + recent projects |
-| `/projects`            | All projects                        |
-| `/projects/:projectId` | Words in a project                  |
+### Without Docker
+
+1. Start PostgreSQL locally and set `DATABASE_URL` (default: `postgres://english_cards:english_cards@localhost:5432/english_cards`)
+2. Install dependencies:
+
+```bash
+npm install --prefix frontend
+npm install --prefix backend
+```
+
+3. Run backend and frontend in separate terminals:
+
+```bash
+npm run dev:backend
+npm run dev:frontend
+```
+
+- Frontend: http://localhost:5173 (proxies `/api` to backend)
+- Backend: http://localhost:3001
+
+## API
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/users/current` | Current user |
+| GET | `/api/projects?userId=` | User projects |
+| GET | `/api/projects/:id` | Project by id |
+| POST | `/api/projects?userId=` | Create project |
+| GET | `/api/words/project/:projectId` | Words in project |
+| POST | `/api/words` | Create word |
+
+## Scripts (root)
+
+```bash
+npm run docker:up       # build and start all services
+npm run docker:down     # stop services
+npm run dev:frontend    # frontend dev server
+npm run dev:backend     # backend dev server
+```

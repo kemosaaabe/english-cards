@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: english_cards
+      POSTGRES_PASSWORD: english_cards
+      POSTGRES_DB: english_cards
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U english_cards -d english_cards']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgres://english_cards:english_cards@db:5432/english_cards
+      PORT: 3001
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '3001:3001'
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - '8080:80'
+
+volumes:
+  postgres_data:
