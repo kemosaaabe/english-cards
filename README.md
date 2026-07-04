@@ -13,14 +13,18 @@ english-cards/
 
 ## Local development
 
-### With Docker (recommended)
+### With Docker
+
+Поднимает Postgres, backend и **Vite dev server** с hot reload:
 
 ```bash
 docker compose up --build
 ```
 
-- Frontend: http://localhost:8080
+- Frontend (dev): http://localhost:5174
 - Backend API: http://localhost:3001/api/health
+
+Исходники frontend монтируются в контейнер — изменения применяются без пересборки.
 
 ### Without Docker
 
